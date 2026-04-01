@@ -6,3 +6,5 @@ pdfminer.six==20221105
 spacy==3.7.4
 sentence-transformers==2.7.0
 Pillow==10.3.0
+gunicorn
+whitenoise

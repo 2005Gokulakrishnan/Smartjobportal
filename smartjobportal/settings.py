@@ -4,8 +4,11 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-smartjobportal-university-2025-key-xyz'
-DEBUG = True
-ALLOWED_HOSTS = ['*']
+
+# 🔴 IMPORTANT for hosting
+DEBUG = False
+
+ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -20,6 +23,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # 🔥 added for static files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -67,10 +71,15 @@ TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
 USE_TZ = True
 
+# 🔹 Static files
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+# 🔹 WhiteNoise config
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# 🔹 Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
@@ -94,9 +103,12 @@ REST_FRAMEWORK = {
     ],
 }
 
+# 🔹 Upload limits
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+# 🔹 Ensure folders exist
 os.makedirs(BASE_DIR / 'media' / 'resumes', exist_ok=True)
 os.makedirs(BASE_DIR / 'staticfiles', exist_ok=True)
